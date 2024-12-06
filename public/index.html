@@ -3,123 +3,246 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>𝗙𝗔𝗖𝗘𝗕𝗢𝗢𝗞 𝗨𝗜𝗗 𝗘𝗫𝗧𝗥𝗔𝗖𝗧𝗢𝗥 𝗕𝗬 𝗭𝗘𝗥𝗢𝗖𝗢𝗗𝗘𝗦</title>
+  <title>Facebook UID Extractor by ZeroCodes</title>
   <link rel="icon" type="image/png" href="https://i.ibb.co/kG5cqrM/downloadsss.jpg">
   <script src="https://cdn.tailwindcss.com"></script>
   <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;600;700&family=Rajdhani:wght@400;500;600;700&display=swap" rel="stylesheet">
   <style>
     body {
-      font-family: 'Poppins', sans-serif;
+      font-family: 'Rajdhani', sans-serif;
       margin: 0;
       padding: 0;
+      min-height: 100vh;
+      background: linear-gradient(135deg, #1a1a1a 0%, #2d2d2d 100%);
       display: flex;
       justify-content: center;
       align-items: center;
-      min-height: 100vh;
-      background-color: #1c1c1c;
+      color: #ffffff;
     }
 
-    @keyframes fadeIn {
-      0% { opacity: 0; }
-      100% { opacity: 1; }
+    .glass-effect {
+      background: rgba(45, 45, 45, 0.25);
+      border-radius: 16px;
+      padding: 2rem;
+      width: 90%;
+      max-width: 500px;
+      box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      backdrop-filter: blur(10px);
+      animation: slideIn 0.5s ease-out;
     }
 
-    @keyframes neonGlow {
-      0% {
-        border-image: linear-gradient(45deg, #ff0080, #ff8c00, #84dfff, #00ff99, #ff0080);
-        border-image-slice: 1;
-        border-position: 0%;
-      }
-      50% {
-        border-image: linear-gradient(45deg, #ff8c00, #ff0080, #00ff99, #84dfff, #ff8c00);
-        border-image-slice: 1;
-        border-position: 50%;
-      }
-      100% {
-        border-image: linear-gradient(45deg, #84dfff, #ff0080, #ff8c00, #00ff99, #84dfff);
-        border-image-slice: 1;
-        border-position: 100%;
-      }
+    .glass-input {
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      backdrop-filter: blur(5px);
+      transition: all 0.3s ease;
     }
 
-    .fade-in { animation: fadeIn 1s ease-out forwards; }
-    .fade-in-delay { animation: fadeIn 1s ease-out 0.5s forwards; }
-    .scale-up { transition: transform 0.2s ease-in-out; }
-    .scale-up:hover { transform: scale(1.05); }
-    .input-focus { transition: all 0.3s ease; }
-    .input-focus:focus { border-color: #4caf50; box-shadow: 0 0 0 2px rgba(76, 175, 80, 0.5); }
+    .glass-input:focus {
+      background: rgba(255, 255, 255, 0.1);
+      border-color: rgba(255, 255, 255, 0.3);
+      box-shadow: 0 0 20px rgba(74, 144, 226, 0.3);
+      outline: none;
+    }
 
-    .container {
-      background-color: #2d2d2d; /* Dark background */
-      border-radius: 12px; /* Rounded corners */
-      padding: 24px;
-      max-width: 480px; /* Smaller width to avoid edge collision */
-      width: 100%;
+    .content-wrapper {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 1.5rem;
+    }
+
+    .logo {
+      width: 120px;
+      height: 120px;
+      border-radius: 50%;
+      object-fit: cover;
+      border: 3px solid rgba(255, 255, 255, 0.1);
+      transition: transform 0.3s ease;
+      animation: pulse 2s infinite;
+    }
+
+    .title {
+      font-family: 'Orbitron', sans-serif;
+      font-size: 1.8rem;
+      font-weight: 700;
       text-align: center;
-      animation: fadeIn 1s ease-out forwards;
-      border: 6px solid transparent; /* Thinner border */
-      border-image: linear-gradient(45deg, #ff0080, #ff8c00, #84dfff, #00ff99, #ff0080); /* Neon gradient */
-      border-image-slice: 1;
-      animation: neonGlow 5s linear infinite; /* Neon effect moving */
-      margin: 20px; /* Space around container */
-      box-shadow: 0 0 15px rgba(255, 255, 255, 0.1); /* Slight shadow to enhance text readability */
+      background: linear-gradient(45deg, #fff, #b3b3b3);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      margin: 0;
+      animation: glow 2s ease-in-out infinite alternate;
     }
 
-    /* Text color adjustments for better readability */
-    h1, p, .text-lg, .text-xl {
+    .input-group {
+      width: 100%;
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+    }
+
+    .url-input {
+      width: 100%;
+      padding: 1rem;
+      border-radius: 8px;
       color: white;
+      font-size: 1rem;
     }
 
-    .error {
-      color: red;
+    .neon-button {
+      background: linear-gradient(45deg, #4a90e2, #357abd);
+      color: white;
+      padding: 1rem;
+      border-radius: 8px;
+      border: none;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      position: relative;
+      overflow: hidden;
     }
 
-    .result p {
-      color: #d3d3d3; /* Lighter text color for better contrast */
+    .neon-button::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: -100%;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(
+        120deg,
+        transparent,
+        rgba(255, 255, 255, 0.2),
+        transparent
+      );
+      transition: 0.5s;
+    }
+
+    .neon-button:hover::before {
+      left: 100%;
+    }
+
+    .neon-button-success {
+      background: linear-gradient(45deg, #45b649, #38a03c);
+    }
+
+    .glass-card {
+      background: rgba(255, 255, 255, 0.05);
+      border-radius: 12px;
+      overflow: hidden;
+      transition: all 0.3s ease;
+    }
+
+    .result-header {
+      background: rgba(255, 255, 255, 0.1);
+      padding: 1rem;
+      font-weight: 600;
+      text-align: center;
+      font-family: 'Orbitron', sans-serif;
+    }
+
+    .result-content {
+      padding: 1.5rem;
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+    }
+
+    @keyframes slideIn {
+      from { opacity: 0; transform: translateY(-20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    @keyframes pulse {
+      0% { box-shadow: 0 0 0 0 rgba(74, 144, 226, 0.4); }
+      70% { box-shadow: 0 0 0 10px rgba(74, 144, 226, 0); }
+      100% { box-shadow: 0 0 0 0 rgba(74, 144, 226, 0); }
+    }
+
+    @keyframes glow {
+      from { text-shadow: 0 0 5px #fff, 0 0 10px #fff, 0 0 15px #4a90e2; }
+      to { text-shadow: 0 0 10px #fff, 0 0 20px #fff, 0 0 30px #4a90e2; }
+    }
+
+    .hidden {
+      display: none;
+    }
+
+    .error-message {
+      color: #ff4d4d;
+      font-size: 0.9rem;
+      text-align: center;
+      padding: 0.5rem;
+      animation: shake 0.5s ease-in-out;
+    }
+
+    @keyframes shake {
+      0%, 100% { transform: translateX(0); }
+      25% { transform: translateX(-5px); }
+      75% { transform: translateX(5px); }
     }
 
     @media (max-width: 640px) {
-      .container {
-        padding: 16px;
+      .glass-effect {
+        padding: 1.5rem;
       }
-      h1 {
+      
+      .title {
         font-size: 1.5rem;
       }
-      .input-focus {
-        padding: 2px;
+      
+      .logo {
+        width: 100px;
+        height: 100px;
       }
     }
   </style>
 </head>
 <body>
+  <div class="container glass-effect">
+    <div class="content-wrapper">
+      <img 
+        src="https://i.ibb.co/kG5cqrM/downloadsss.jpg" 
+        alt="UID Extractor Logo" 
+        class="logo pulse"
+      >
+      <h1 class="title glow">Facebook UID Extractor</h1>
+      
+      <div class="input-group">
+        <input 
+          type="text" 
+          id="urlInput" 
+          placeholder="Enter Facebook Profile URL"
+          class="url-input glass-input"
+        />
+        <button 
+          onclick="fetchData()" 
+          class="submit-button neon-button">
+          Extract UID
+        </button>
+      </div>
 
-  <div class="container bg-gray-800 rounded-lg p-8 shadow-lg w-full max-w-md text-center fade-in flex flex-col items-center">
-    <img src="https://i.ibb.co/kG5cqrM/downloadsss.jpg" alt="UID Extractor Logo" class="w-3/4 sm:w-full mb-4 rounded-lg">
-    <h1 class="text-3xl font-bold mb-4">FACEBOOK UID EXTRACTOR</h1>
-    <input 
-      type="text" 
-      id="urlInput" 
-      placeholder="Enter URL here" 
-      class="w-full p-3 mb-4 text-black rounded-md border border-gray-600 bg-gray-200 focus:outline-none focus:ring-2 focus:ring-blue-500 input-focus scale-up"
-    />
-    <button 
-      onclick="fetchData()" 
-      class="w-full py-3 bg-blue-600 text-white rounded-md hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 scale-up">
-      FIND UID
-    </button>
+      <div id="errorMessage" class="error-message hidden">
+        Please enter a valid URL
+      </div>
 
-    <div class="error text-red-500 mt-4 hidden" id="errorMessage">PLEASE ENTER A VALID URL</div>
-    <div class="result mt-4 p-4 bg-gray-700 border border-gray-600 rounded-md hidden fade-in-delay" id="result">
-      <h3 class="text-xl font-bold mb-2">RESULT :</h3>
-      <p id="resultId" class="text-lg font-bold"></p>
-      <p id="resultStatus" class="text-sm mt-2 font-semibold"></p>
-      <button 
-        id="copyButton" 
-        onclick="copyToClipboard()" 
-        class="mt-4 px-4 py-2 bg-green-500 text-white rounded-md hover:bg-green-600 focus:outline-none scale-up">
-        COPY UID
-      </button>
+      <div id="result" class="result-container glass-card hidden">
+        <div class="result-header">Results</div>
+        <div class="result-content">
+          <p id="resultId" class="result-id"></p>
+          <p id="resultStatus" class="result-status"></p>
+          <button 
+            id="copyButton" 
+            onclick="copyToClipboard()" 
+            class="copy-button neon-button-success">
+            Copy UID
+          </button>
+        </div>
+      </div>
     </div>
   </div>
 
@@ -141,9 +264,11 @@
       }
 
       const loadingAlert = Swal.fire({
-        title: 'PLEASE WAIT ⚠',
-        text: 'FETCHING THE ID OF YOUR PROVIDED LINK',
+        title: 'Processing Request',
+        text: 'Extracting Facebook UID...',
         showConfirmButton: false,
+        background: '#2d2d2d',
+        color: '#ffffff',
         didOpen: () => {
           Swal.showLoading();
         }
@@ -156,12 +281,12 @@
         if (response.ok) {
           loadingAlert.close();
           resultDiv.classList.remove('hidden');
-          resultDiv.classList.add('fade-in-delay');
-          resultId.textContent = `ID: ${data.result}`;
+          resultDiv.classList.add('fade-in');
+          resultId.textContent = `UID: ${data.result}`;
           resultStatus.textContent = `Status: ${data.status}`;
           copyButton.classList.remove('hidden');
         } else {
-          throw new Error(data.error || 'Unknown error');
+          throw new Error(data.error || 'Failed to extract UID');
         }
       } catch (error) {
         loadingAlert.close();
@@ -171,24 +296,33 @@
     }
 
     function copyToClipboard() {
-      const resultId = document.getElementById('resultId').textContent.replace('ID: ', '');
+      const resultId = document.getElementById('resultId').textContent.replace('UID: ', '');
+      
       navigator.clipboard.writeText(resultId).then(() => {
         Swal.fire({
           icon: 'success',
-          title: 'ID COPIED!',
-          text: `THE ID "${resultId}" HAS BEEN COPIED TO CLIPBOARD - ZEROCODES`,
+          title: 'Copied Successfully',
+          text: 'The UID has been copied to your clipboard',
+          background: '#2d2d2d',
+          color: '#ffffff',
           showConfirmButton: false,
           timer: 2000,
-          didOpen: () => {
-            const checkmark = Swal.getPopup().querySelector('.swal2-icon');
-            checkmark.style.animation = 'checkmark 1s ease';
+          customClass: {
+            popup: 'swal-dark',
+            title: 'swal-title',
+            content: 'swal-content'
           }
         });
       }).catch(err => {
-        alert('Failed to copy ID: ', err);
+        Swal.fire({
+          icon: 'error',
+          title: 'Copy Failed',
+          text: 'Failed to copy UID to clipboard',
+          background: '#2d2d2d',
+          color: '#ffffff'
+        });
       });
     }
   </script>
-
 </body>
 </html>
